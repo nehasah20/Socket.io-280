@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+    
+	socket.on('test', function(data){
+      document.getElementById("updates").innerHTML= data.description;
+      document.getElementById("score").innerHTML= data.TotalScore;
+      document.getElementById("desc").innerHTML= data.Desc;
+      });
+	
+	  $(document).ready(function(){
+   		 $("#tuneIn").click(function(){
+       socket.emit('clientEvent', {"dp" : "Send Score"});
+    });
+ });   
+    $(document).ready(function(){
+   		 $("#tuneOut").click(function(){
+       socket.emit('tuneOut', {"dp" : "Send Score"});
+    });
+     
+});
+  </script>
+  </head>
+  <body>
+ 
+    <h1>Welcome to Cricket Live Score Streaming</h1>
+ 	<div style="border : solid #A6F7F7 2px; width : 600px ; height : 300px"  >
+    	<div style="border : solid #A6F7F 2px; padding-top : 20px; width : 600px ; height : 60px;background-color:#A6F7F7 ;  text-align: center;">Live Score </div>
+	    	<div style="padding : 20px;height : 150px">
+		        <h3 id="updates"></h3>
+		        <h3 id="score"></h3> 
+		        <h3 id="desc"></h3> 
+	        </div>
+    		<div style="padding : 20px;height : 100px;  align: center;">
+		    	<button id= "tuneIn" type="button" class="btn btn-success"> TuneIn </button>
+		    	<button id= "tuneOut" type="button" class="btn btn-danger"> TuneOut </button>
+		    </div>	
+    	</div>
+    </div>
+   
+ 
+      
+  </body>
+</html>
